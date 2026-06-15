@@ -45,4 +45,14 @@ class WorkPackage extends Model
     {
         return $this->belongsTo(User::class, 'assignee_id');
     }
+
+    public function healthLogs(): HasMany
+    {
+        return $this->hasMany(HealthLog::class)->latest('checked_at');
+    }
+
+    public function latestHealth()
+    {
+        return $this->hasOne(HealthLog::class)->latest('checked_at');
+    }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\HealthController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\WbsController;
 use Illuminate\Foundation\Application;
@@ -31,6 +32,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/wbs/{workPackage}', [WbsController::class, 'patch'])->name('wbs.patch');
     Route::delete('/wbs/{workPackage}', [WbsController::class, 'destroy'])->name('wbs.destroy');
     Route::post('/projects/{project}/wbs/reorder', [WbsController::class, 'reorder'])->name('wbs.reorder');
+
+    Route::get('/projects/{project}/health', [HealthController::class, 'show'])->name('health.show');
+    Route::post('/projects/{project}/health/refresh', [HealthController::class, 'refresh'])->name('health.refresh');
 });
 
 require __DIR__.'/auth.php';

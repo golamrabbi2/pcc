@@ -28,6 +28,14 @@ export default function Show({ project, tree, assignableUsers }) {
                     <Badge variant="outline" className={cn('text-xs', statusColors[project.status])}>
                         {project.status}
                     </Badge>
+                    <div className="ml-4 flex gap-1">
+                        <Button variant="ghost" size="xs" asChild>
+                            <Link href={route('projects.show', project.id)}>WBS</Link>
+                        </Button>
+                        <Button variant="ghost" size="xs" asChild>
+                            <Link href={route('health.show', project.id)}>Health</Link>
+                        </Button>
+                    </div>
                 </div>
             }
         >
