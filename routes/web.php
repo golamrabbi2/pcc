@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Auth\GitHubController as GitHubAuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GitController;
 use App\Http\Controllers\HandoverController;
 use App\Http\Controllers\HealthController;
 use App\Http\Controllers\ProjectController;
@@ -21,6 +23,9 @@ Route::get('/', function () {
 
 Route::get('/dashboard', DashboardController::class)->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/auth/github', [GitHubAuthController::class, 'redirect'])->name('github.redirect');
+Route::get('/auth/github/callback', [GitHubAuthController::class, 'callback'])->name('github.callback');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -38,6 +43,12 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/projects/{project}/handover', [HandoverController::class, 'index'])->name('handover.index');
     Route::post('/wbs/{workPackage}/handover', [HandoverController::class, 'generate'])->name('handover.generate');
+
+    Route::get('/projects/{project}/setup', [ProjectController::class, 'setup'])->name('projects.setup');
+
+    Route::get('/git/repos', [GitController::class, 'repos'])->name('git.repos');
+    Route::get('/git/branches', [GitController::class, 'branches'])->name('git.branches');
+    Route::post('/projects/{project}/connect-repo', [GitController::class, 'connectRepo'])->name('projects.connect-repo');
 });
 
 require __DIR__.'/auth.php';

@@ -17,6 +17,7 @@ class StoreProjectRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string', 'max:5000'],
             'github_repo' => ['nullable', 'string', 'max:255'],
+            'github_owner' => ['nullable', 'string', 'max:255'],
         ];
     }
 }

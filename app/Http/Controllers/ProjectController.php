@@ -82,6 +82,13 @@ class ProjectController extends Controller
             ->toArray();
     }
 
+    public function setup(Project $project): Response
+    {
+        return Inertia::render('Projects/Setup', [
+            'project' => $project->load('owner'),
+        ]);
+    }
+
     public function edit(Project $project): Response
     {
         return Inertia::render('Projects/Edit', [

@@ -16,7 +16,7 @@ class Project extends Model
     /** @use HasFactory<ProjectFactory> */
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['name', 'description', 'status', 'github_repo'];
+    protected $fillable = ['name', 'description', 'status', 'github_repo', 'github_owner', 'github_webhook_secret'];
 
     protected static function booted(): void
     {
