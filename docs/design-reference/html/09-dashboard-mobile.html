@@ -1,0 +1,345 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>PCC Mobile Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#93000a",
+                        "surface-tint": "#0053db",
+                        "on-primary-fixed": "#00174b",
+                        "surface-container-high": "#e7e7f3",
+                        "primary": "#004ac6",
+                        "tertiary": "#943700",
+                        "on-primary-container": "#eeefff",
+                        "on-background": "#191b23",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "on-tertiary-fixed": "#360f00",
+                        "surface-container-low": "#f3f3fe",
+                        "background": "#faf8ff",
+                        "secondary-fixed": "#e2e2e2",
+                        "surface-container": "#ededf9",
+                        "outline": "#737686",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "secondary-container": "#e2e2e2",
+                        "secondary": "#5d5f5e",
+                        "surface-container-highest": "#e1e2ed",
+                        "on-secondary-container": "#636564",
+                        "on-error": "#ffffff",
+                        "on-tertiary-container": "#ffede6",
+                        "outline-variant": "#c3c6d7",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "surface-dim": "#d9d9e5",
+                        "on-surface": "#191b23",
+                        "error": "#ba1a1a",
+                        "inverse-primary": "#b4c5ff",
+                        "primary-fixed": "#dbe1ff",
+                        "on-secondary-fixed-variant": "#454747",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#c6c7c6",
+                        "inverse-on-surface": "#f0f0fb",
+                        "surface": "#faf8ff",
+                        "surface-bright": "#faf8ff",
+                        "surface-variant": "#e1e2ed",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "on-primary": "#ffffff",
+                        "on-surface-variant": "#434655",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed": "#ffdbcd",
+                        "primary-container": "#2563eb",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed-variant": "#7d2d00",
+                        "tertiary-container": "#bc4800",
+                        "inverse-surface": "#2e3039",
+                        "on-secondary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base_grid": "4px",
+                        "sidebar_width": "240px",
+                        "padding_lg": "24px",
+                        "max_width": "1280px",
+                        "gutter": "24px",
+                        "padding_md": "16px",
+                        "padding_sm": "8px"
+                    },
+                    "fontFamily": {
+                        "h2": ["Inter"],
+                        "metadata": ["Inter"],
+                        "h3": ["Inter"],
+                        "body": ["Inter"],
+                        "h1": ["Inter"],
+                        "code": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "h2": ["18px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "metadata": ["12px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "400" }],
+                        "h3": ["15px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "600" }],
+                        "body": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }],
+                        "h1": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "code": ["12px", { "lineHeight": "16px", "fontWeight": "400" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #FAFAF9;
+            color: #191b23;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bento-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid #E7E5E4;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+        .active-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .wbs-indent {
+            padding-left: 16px;
+        }
+    </style>
+</head>
+<body class="font-body text-body selection:bg-primary-container selection:text-white">
+<!-- Desktop Side Navigation Shell (Hidden on Mobile) -->
+<aside class="hidden md:flex fixed left-0 top-0 h-full w-[240px] bg-[#1C1917] flex-col py-padding_lg z-50">
+<div class="px-6 mb-8">
+<h1 class="text-h1 font-h1 text-white">PCC</h1>
+<p class="text-xs text-outline-variant opacity-70">Project Control Center</p>
+</div>
+<nav class="flex-1 px-4 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 text-white border-l-4 border-primary bg-on-surface-variant/10 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-body font-body">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-outline-variant hover:bg-on-surface-variant/20 hover:text-white transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="account_tree">account_tree</span>
+<span class="text-body font-body">WBS</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-outline-variant hover:bg-on-surface-variant/20 hover:text-white transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="monitor_heart">monitor_heart</span>
+<span class="text-body font-body">Health</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-outline-variant hover:bg-on-surface-variant/20 hover:text-white transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="assignment_turned_in">assignment_turned_in</span>
+<span class="text-body font-body">Handover</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-outline-variant hover:bg-on-surface-variant/20 hover:text-white transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-body font-body">Settings</span>
+</a>
+</nav>
+<div class="px-4 mt-auto">
+<a class="flex items-center gap-3 px-4 py-3 text-outline-variant hover:bg-on-surface-variant/20 hover:text-white transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+<span class="text-body font-body">Profile</span>
+</a>
+</div>
+</aside>
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 left-0 right-0 h-16 bg-white border-b border-outline-variant z-40 md:ml-[240px] flex justify-between items-center px-4 md:px-padding_lg">
+<div class="flex items-center gap-4">
+<h2 class="text-h2 font-h2 text-on-surface">Dashboard</h2>
+</div>
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="notifications">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img alt="User Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPkTfbiFOC7859kY5j9Jy4yrhwk9UTSaOXgmfUg1_UK1kEBPeUK8BQQIUhbodHx94EvrWz3g43GJnXMJtfxwzgNo5ikOkbGwmo_hpZGHNpGEDuz-LfBFiYqfGp2eUeGcOgu_6btJnhEKKPGoA4u9JwV9Vmxp6LNRDvnvP2D5MC-qNLYL4-4kb7Nyh8u9OQMcpC1U94FMMBPbVTe1RduuKrZgjR36sUZPr52dKWzrcSUjD9UE8pbzLxXJpIf9hBLtqp2gTL4_uNn2ZV">
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-20 pb-24 md:pb-8 px-4 md:px-padding_lg md:ml-[240px] max-w-[1280px] mx-auto min-h-screen">
+<!-- Welcome Header -->
+<div class="mb-6">
+<h1 class="text-h1 font-h1 text-on-background">Overview</h1>
+<p class="text-on-surface-variant mt-1">Project Phoenix is currently tracking on schedule.</p>
+</div>
+<!-- Dashboard Widgets -->
+<div class="bento-grid">
+<!-- Health Stats Row -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="glass-card p-4 rounded-xl">
+<span class="text-metadata text-outline uppercase tracking-wider">Health Score</span>
+<div class="flex items-end gap-2 mt-2">
+<span class="text-h1 font-h1">92%</span>
+<span class="active-dot bg-emerald-500 mb-2"></span>
+</div>
+</div>
+<div class="glass-card p-4 rounded-xl">
+<span class="text-metadata text-outline uppercase tracking-wider">Tasks Done</span>
+<div class="flex items-end gap-2 mt-2">
+<span class="text-h1 font-h1">24</span>
+<span class="text-metadata text-on-surface-variant mb-1">/ 30</span>
+</div>
+</div>
+<div class="glass-card p-4 rounded-xl col-span-2 md:col-span-2">
+<span class="text-metadata text-outline uppercase tracking-wider">Budget Utilization</span>
+<div class="mt-2 w-full bg-surface-container rounded-full h-2">
+<div class="bg-primary h-2 rounded-full w-[65%]"></div>
+</div>
+<div class="flex justify-between mt-2">
+<span class="text-metadata font-bold text-on-surface">$124.5k</span>
+<span class="text-metadata text-on-surface-variant">Limit: $190k</span>
+</div>
+</div>
+</div>
+<!-- Main Work Breakdown Tree -->
+<div class="glass-card rounded-xl overflow-hidden">
+<div class="bg-surface-container-low px-4 py-3 border-b border-outline-variant flex justify-between items-center">
+<h3 class="text-h3 font-h3 text-on-surface">Work Breakdown Structure</h3>
+<button class="text-primary text-metadata font-bold hover:underline">View Full</button>
+</div>
+<div class="p-2">
+<!-- WBS Item -->
+<div class="flex flex-col">
+<div class="flex items-center gap-3 p-3 hover:bg-surface-container-low rounded-lg transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-outline text-sm" data-icon="keyboard_arrow_down">keyboard_arrow_down</span>
+<span class="material-symbols-outlined text-primary" data-icon="folder_open">folder_open</span>
+<span class="flex-1 text-body font-semibold">1.0 Design Phase</span>
+<span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold uppercase">On Track</span>
+</div>
+<!-- WBS Children with 16px indentation -->
+<div class="wbs-indent border-l border-outline-variant ml-5">
+<div class="flex items-center gap-3 p-3 hover:bg-surface-container-low rounded-lg transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-outline-variant text-sm" data-icon="circle">circle</span>
+<span class="flex-1 text-body">1.1 User Research</span>
+<span class="text-metadata text-on-surface-variant">100%</span>
+</div>
+<div class="flex items-center gap-3 p-3 hover:bg-surface-container-low rounded-lg transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-outline-variant text-sm" data-icon="circle">circle</span>
+<span class="flex-1 text-body">1.2 Wireframing</span>
+<span class="text-metadata text-on-surface-variant">80%</span>
+</div>
+<div class="wbs-indent border-l border-outline-variant ml-5">
+<div class="flex items-center gap-3 p-3 hover:bg-surface-container-low rounded-lg transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-outline-variant text-sm" data-icon="radio_button_checked">radio_button_checked</span>
+<span class="flex-1 text-body">1.2.1 Mobile Views</span>
+<span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-bold uppercase">Pending</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Health Status & Feed -->
+<div class="glass-card rounded-xl p-4">
+<h3 class="text-h3 font-h3 mb-4">Real-time Health Feed</h3>
+<div class="space-y-4">
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-full bg-on-primary-container flex-shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="sync">sync</span>
+</div>
+<div>
+<p class="text-body font-semibold">Handover Sync Completed</p>
+<p class="text-metadata text-on-surface-variant">Infrastructure team completed migration for 'Project Phoenix'.</p>
+<p class="text-metadata text-outline mt-1">2 hours ago</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-full bg-error-container flex-shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-error" data-icon="warning">warning</span>
+</div>
+<div>
+<p class="text-body font-semibold text-error">Resource Bottleneck</p>
+<p class="text-metadata text-on-surface-variant">Lead Developer has 3 high-priority blockers in Sprint 4.</p>
+<p class="text-metadata text-outline mt-1">5 hours ago</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex flex-col gap-3">
+<button class="h-[44px] bg-primary text-white font-bold rounded-lg flex items-center justify-center gap-2 shadow-lg shadow-primary/20 hover:bg-on-primary-fixed-variant transition-all active:scale-95">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                    Create New Task
+                </button>
+<button class="h-[44px] bg-white border border-outline-variant text-on-surface font-bold rounded-lg flex items-center justify-center gap-2 hover:bg-surface-container transition-all active:scale-95">
+<span class="material-symbols-outlined" data-icon="file_upload">file_upload</span>
+                    Export Report
+                </button>
+</div>
+</div>
+</main>
+<!-- Mobile Bottom Navigation Shell -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 h-[56px] bg-white border-t border-outline-variant flex items-center justify-around px-2 z-50">
+<a class="flex flex-col items-center justify-center w-16 h-full text-primary" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="text-[10px] font-bold mt-0.5">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center w-16 h-full text-on-surface-variant opacity-60" href="#">
+<span class="material-symbols-outlined" data-icon="account_tree">account_tree</span>
+<span class="text-[10px] font-medium mt-0.5">WBS</span>
+</a>
+<a class="flex flex-col items-center justify-center w-16 h-full text-on-surface-variant opacity-60" href="#">
+<span class="material-symbols-outlined" data-icon="monitor_heart">monitor_heart</span>
+<span class="text-[10px] font-medium mt-0.5">Health</span>
+</a>
+<a class="flex flex-col items-center justify-center w-16 h-full text-on-surface-variant opacity-60" href="#">
+<span class="material-symbols-outlined" data-icon="assignment_turned_in">assignment_turned_in</span>
+<span class="text-[10px] font-medium mt-0.5">Handover</span>
+</a>
+<a class="flex flex-col items-center justify-center w-16 h-full text-on-surface-variant opacity-60" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-[10px] font-medium mt-0.5">Settings</span>
+</a>
+</nav>
+<script>
+        // Simple ripple effect for buttons
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', function (e) {
+                let ripple = document.createElement('span');
+                ripple.classList.add('ripple');
+                this.appendChild(ripple);
+                let x = e.clientX - e.target.offsetLeft;
+                let y = e.clientY - e.target.offsetTop;
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // Toggle WBS visibility (Simulation)
+        document.querySelectorAll('.material-symbols-outlined[data-icon="keyboard_arrow_down"]').forEach(icon => {
+            icon.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const parent = this.closest('.flex-col');
+                const children = parent.querySelector('.wbs-indent');
+                if (children) {
+                    children.classList.toggle('hidden');
+                    this.style.transform = children.classList.contains('hidden') ? 'rotate(-90deg)' : 'rotate(0deg)';
+                    this.style.transition = 'transform 0.2s ease';
+                }
+            });
+        });
+    </script>
+</body></html>

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\WbsController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -22,6 +24,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::resource('projects', ProjectController::class);
+    Route::post('/projects/{project}/wbs', [WbsController::class, 'store'])->name('wbs.store');
+    Route::put('/wbs/{workPackage}', [WbsController::class, 'update'])->name('wbs.update');
+    Route::patch('/wbs/{workPackage}', [WbsController::class, 'patch'])->name('wbs.patch');
+    Route::delete('/wbs/{workPackage}', [WbsController::class, 'destroy'])->name('wbs.destroy');
+    Route::post('/projects/{project}/wbs/reorder', [WbsController::class, 'reorder'])->name('wbs.reorder');
 });
 
 require __DIR__.'/auth.php';

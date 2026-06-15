@@ -1,0 +1,427 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>PCC - Project Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error-container": "#93000a",
+                    "surface-tint": "#0053db",
+                    "on-primary-fixed": "#00174b",
+                    "surface-container-high": "#e7e7f3",
+                    "primary": "#004ac6",
+                    "tertiary": "#943700",
+                    "on-primary-container": "#eeefff",
+                    "on-background": "#191b23",
+                    "tertiary-fixed-dim": "#ffb596",
+                    "on-tertiary-fixed": "#360f00",
+                    "surface-container-low": "#f3f3fe",
+                    "background": "#faf8ff",
+                    "secondary-fixed": "#e2e2e2",
+                    "surface-container": "#ededf9",
+                    "outline": "#737686",
+                    "on-secondary-fixed": "#1a1c1c",
+                    "secondary-container": "#e2e2e2",
+                    "secondary": "#5d5f5e",
+                    "surface-container-highest": "#e1e2ed",
+                    "on-secondary-container": "#636564",
+                    "on-error": "#ffffff",
+                    "on-tertiary-container": "#ffede6",
+                    "outline-variant": "#c3c6d7",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "surface-dim": "#d9d9e5",
+                    "on-surface": "#191b23",
+                    "error": "#ba1a1a",
+                    "inverse-primary": "#b4c5ff",
+                    "primary-fixed": "#dbe1ff",
+                    "on-secondary-fixed-variant": "#454747",
+                    "error-container": "#ffdad6",
+                    "secondary-fixed-dim": "#c6c7c6",
+                    "inverse-on-surface": "#f0f0fb",
+                    "surface": "#faf8ff",
+                    "surface-bright": "#faf8ff",
+                    "surface-variant": "#e1e2ed",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "on-primary": "#ffffff",
+                    "on-surface-variant": "#434655",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed": "#ffdbcd",
+                    "primary-container": "#2563eb",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed-variant": "#7d2d00",
+                    "tertiary-container": "#bc4800",
+                    "inverse-surface": "#2e3039",
+                    "on-secondary": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base_grid": "4px",
+                    "sidebar_width": "240px",
+                    "padding_lg": "24px",
+                    "max_width": "1280px",
+                    "gutter": "24px",
+                    "padding_md": "16px",
+                    "padding_sm": "8px"
+            },
+            "fontFamily": {
+                    "h2": ["Inter"],
+                    "metadata": ["Inter"],
+                    "h3": ["Inter"],
+                    "body": ["Inter"],
+                    "h1": ["Inter"],
+                    "code": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                    "h2": ["18px", {"lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "metadata": ["12px", {"lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                    "h3": ["15px", {"lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "600"}],
+                    "body": ["14px", {"lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400"}],
+                    "h1": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "code": ["12px", {"lineHeight": "16px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #FAFAF9; /* Level 0 Background per Style Guidance */
+        }
+        .sidebar-active-tab {
+            border-left-width: 4px;
+        }
+    </style>
+</head>
+<body class="font-body text-body text-on-surface">
+<!-- SideNavBar (Predicted Component) -->
+<aside class="fixed left-0 top-0 h-full w-[240px] bg-[#1C1917] flex flex-col py-padding_lg transition-all duration-200">
+<div class="px-padding_lg mb-8">
+<h1 class="text-h1 font-h1 text-white tracking-tight">PCC</h1>
+<p class="text-metadata text-outline-variant">Project Control Center</p>
+</div>
+<nav class="flex-1 space-y-1">
+<!-- Dashboard Tab -->
+<a class="flex items-center px-padding_lg py-3 text-outline-variant hover:bg-on-surface-variant/20 hover:text-white transition-all duration-200" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="dashboard">dashboard</span>
+<span class="font-body text-body">Dashboard</span>
+</a>
+<!-- WBS Tab -->
+<a class="flex items-center px-padding_lg py-3 text-outline-variant hover:bg-on-surface-variant/20 hover:text-white transition-all duration-200" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="account_tree">account_tree</span>
+<span class="font-body text-body">WBS</span>
+</a>
+<!-- Health Tab -->
+<a class="flex items-center px-padding_lg py-3 text-outline-variant hover:bg-on-surface-variant/20 hover:text-white transition-all duration-200" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="monitor_heart">monitor_heart</span>
+<span class="font-body text-body">Health</span>
+</a>
+<!-- Handover Tab -->
+<a class="flex items-center px-padding_lg py-3 text-outline-variant hover:bg-on-surface-variant/20 hover:text-white transition-all duration-200" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="assignment_turned_in">assignment_turned_in</span>
+<span class="font-body text-body">Handover</span>
+</a>
+<!-- Settings Tab (Active State per Logic) -->
+<a class="flex items-center px-padding_lg py-3 text-white border-l-4 border-primary bg-on-surface-variant/10 transition-all duration-200" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="settings">settings</span>
+<span class="font-body text-body">Settings</span>
+</a>
+</nav>
+<div class="px-padding_lg mt-auto pt-8 border-t border-on-surface-variant/10">
+<a class="flex items-center text-outline-variant hover:text-white transition-all duration-200" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="account_circle">account_circle</span>
+<span class="font-body text-body">Profile</span>
+</a>
+</div>
+</aside>
+<!-- TopNavBar (Predicted Component) -->
+<header class="fixed top-0 right-0 left-[240px] h-16 flex justify-between items-center px-padding_lg bg-surface border-b border-outline-variant z-10">
+<div class="flex items-center space-x-6">
+<span class="text-h2 font-h2 text-on-surface">PCC</span>
+<nav class="hidden md:flex space-x-4">
+<a class="text-on-surface-variant font-body text-body hover:text-primary transition-colors" href="#">Projects</a>
+<a class="text-primary font-bold font-body text-body" href="#">Current Workspace</a>
+</nav>
+</div>
+<div class="flex items-center space-x-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img alt="User Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdP-QBsW2OfZeqGwndeJB-qAZPMNgo1vXZkTF8RIXmatpxv3ZGPTeMEqPtu2LVK6k5bSO2wsaLhndhb6iI2Oo0bHbg-tG6zYr-1q4C7jQEha3vinL4QRCqJUGQGquyFcpvK3_Xb2RdFExG56mFFQCK6dDdKx8K60Whe_bBOqH6beVBepBKMptrEJ1w9lfiStWP8xih59vnOq-qEwR_hPpcXRP4HiyZnkQkEjKt-oin7h-tgIZwIJ8rC-eOyhBv0fNth0np7PCkQvRl">
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-[240px] pt-16 min-h-screen bg-stone-50">
+<div class="max-w-[1280px] mx-auto p-padding_lg">
+<header class="mb-8">
+<h2 class="text-h1 font-h1 text-on-surface">Project Settings</h2>
+<p class="text-on-surface-variant">Manage your project configuration, team access, and integrations.</p>
+</header>
+<div class="flex flex-col md:flex-row gap-gutter">
+<!-- Vertical Tabs (Navigation Rail) -->
+<nav class="w-full md:w-64 space-y-1">
+<button class="tab-trigger w-full flex items-center px-4 py-3 rounded-lg text-left transition-colors bg-white shadow-sm border border-stone-200 text-primary font-bold" id="tab-btn-general" onclick="switchTab('general')">
+<span class="material-symbols-outlined mr-3" data-icon="tune">tune</span>
+<span class="font-body text-body">General</span>
+</button>
+<button class="tab-trigger w-full flex items-center px-4 py-3 rounded-lg text-left transition-colors text-on-surface-variant hover:bg-stone-100" id="tab-btn-members" onclick="switchTab('members')">
+<span class="material-symbols-outlined mr-3" data-icon="group">group</span>
+<span class="font-body text-body">Members</span>
+</button>
+<button class="tab-trigger w-full flex items-center px-4 py-3 rounded-lg text-left transition-colors text-on-surface-variant hover:bg-stone-100" id="tab-btn-integrations" onclick="switchTab('integrations')">
+<span class="material-symbols-outlined mr-3" data-icon="extension">extension</span>
+<span class="font-body text-body">Integrations</span>
+</button>
+<button class="tab-trigger w-full flex items-center px-4 py-3 rounded-lg text-left transition-colors text-error hover:bg-error-container/10" id="tab-btn-danger" onclick="switchTab('danger')">
+<span class="material-symbols-outlined mr-3" data-icon="report">report</span>
+<span class="font-body text-body">Danger Zone</span>
+</button>
+</nav>
+<!-- Settings Panes -->
+<div class="flex-1">
+<!-- General Settings Pane -->
+<section class="tab-pane space-y-6" id="pane-general">
+<div class="bg-white rounded-xl shadow-sm border border-stone-200 p-6">
+<h3 class="text-h2 font-h2 mb-6">General Information</h3>
+<div class="space-y-4">
+<div>
+<label class="block text-metadata font-metadata text-on-surface-variant mb-1">Project Name</label>
+<input class="w-full h-[36px] rounded-lg border-stone-200 focus:ring-2 focus:ring-primary focus:border-primary px-3 text-body font-body" type="text" value="PCC Control System">
+</div>
+<div>
+<label class="block text-metadata font-metadata text-on-surface-variant mb-1">Description</label>
+<textarea class="w-full rounded-lg border-stone-200 focus:ring-2 focus:ring-primary focus:border-primary px-3 py-2 text-body font-body" rows="4">Modern enterprise-grade dashboard for coordinating complex civil engineering projects with automated WBS generation and real-time health monitoring.</textarea>
+</div>
+<div class="pt-4 border-t border-stone-100 flex items-center justify-between">
+<div class="flex items-center space-x-3">
+<div class="w-10 h-10 flex items-center justify-center bg-stone-900 rounded-lg text-white">
+<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path></svg>
+</div>
+<div>
+<p class="font-h3 text-h3">GitHub Connection</p>
+<p class="text-metadata text-on-surface-variant">Repository: <span class="font-code text-code">pcc-org/control-center-core</span></p>
+</div>
+</div>
+<button class="bg-stone-100 hover:bg-stone-200 text-on-surface px-4 py-2 rounded-lg text-body font-body transition-colors">Disconnect</button>
+</div>
+</div>
+<div class="mt-8 flex justify-end">
+<button class="bg-primary hover:bg-primary-container text-white px-6 py-2 rounded-lg text-body font-body font-bold transition-colors">Save Changes</button>
+</div>
+</div>
+</section>
+<!-- Members Settings Pane -->
+<section class="tab-pane hidden space-y-6" id="pane-members">
+<div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden">
+<div class="p-6 border-b border-stone-100 flex justify-between items-center">
+<div>
+<h3 class="text-h2 font-h2">Project Members</h3>
+<p class="text-metadata text-on-surface-variant">Manage who has access to this project.</p>
+</div>
+<button class="bg-primary hover:bg-primary-container text-white px-4 py-2 rounded-lg text-body font-body font-bold flex items-center transition-colors">
+<span class="material-symbols-outlined mr-2" data-icon="person_add">person_add</span>
+                                    Invite Member
+                                </button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-stone-50 border-b border-stone-200">
+<tr>
+<th class="px-6 py-3 font-metadata text-stone-500 uppercase tracking-wider">Member</th>
+<th class="px-6 py-3 font-metadata text-stone-500 uppercase tracking-wider">Role</th>
+<th class="px-6 py-3 font-metadata text-stone-500 uppercase tracking-wider">Status</th>
+<th class="px-6 py-3"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-stone-100">
+<tr class="hover:bg-stone-50 transition-colors">
+<td class="px-6 py-4 flex items-center space-x-3">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">JD</div>
+<div>
+<p class="font-h3 text-h3">Jane Doe (You)</p>
+<p class="text-metadata text-on-surface-variant">jane.doe@pcc-global.com</p>
+</div>
+</td>
+<td class="px-6 py-4">
+<select class="bg-transparent border-none focus:ring-0 text-body font-body text-on-surface p-0 cursor-pointer">
+<option selected="">PM (Admin)</option>
+<option>Developer</option>
+</select>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-green-100 text-green-700 rounded-full text-metadata font-bold">Active</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-stone-50 transition-colors">
+<td class="px-6 py-4 flex items-center space-x-3">
+<div class="w-10 h-10 rounded-full overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a developer in a modern studio setting with soft bokeh background and cool corporate lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnb9EIGHd97LhXa5GunJmHB6dkcHGfVKabZNHijhRbSsy50Co9wD5z7JCyR9EOyFoQf8EU0gwu4EXdJF0VBAPBtwVGOMx6EJziqY5l0kC_u-DX1rchyG5cbj7iBky67lyeOoQ1Hk5qiEu-1P9j3kT_abxcHMAZzIfq-l3CXtwGLtwqzww-CxTMZ3syG3CrTC8TbSaTMeHTXHq_AoJfDMsx8rr9fdVnh6yR2xov-hPqkVTWrMDxhqaYgL2HHQmqKVNT9V7sdOTGYohR">
+</div>
+<div>
+<p class="font-h3 text-h3">Marcus Kovic</p>
+<p class="text-metadata text-on-surface-variant">m.kovic@dev-squad.io</p>
+</div>
+</td>
+<td class="px-6 py-4">
+<select class="bg-transparent border-none focus:ring-0 text-body font-body text-on-surface p-0 cursor-pointer">
+<option>PM (Admin)</option>
+<option selected="">Developer</option>
+</select>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-green-100 text-green-700 rounded-full text-metadata font-bold">Active</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-stone-50 transition-colors">
+<td class="px-6 py-4 flex items-center space-x-3">
+<div class="w-10 h-10 rounded-full bg-stone-100 flex items-center justify-center text-stone-500 font-bold">ST</div>
+<div>
+<p class="font-h3 text-h3">Sarah T.</p>
+<p class="text-metadata text-on-surface-variant">sarah.t@pcc-global.com</p>
+</div>
+</td>
+<td class="px-6 py-4">
+<select class="bg-transparent border-none focus:ring-0 text-body font-body text-on-surface p-0 cursor-pointer">
+<option>PM (Admin)</option>
+<option selected="">Developer</option>
+</select>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-stone-100 text-stone-600 rounded-full text-metadata font-bold">Pending</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<!-- Integrations Settings Pane -->
+<section class="tab-pane hidden space-y-6" id="pane-integrations">
+<div class="bg-white rounded-xl shadow-sm border border-stone-200 p-6">
+<h3 class="text-h2 font-h2 mb-4">Integrations &amp; Webhooks</h3>
+<div class="space-y-4">
+<div class="p-4 border border-stone-100 rounded-lg flex items-center justify-between">
+<div class="flex items-center space-x-4">
+<div class="p-2 bg-blue-50 rounded text-blue-600">
+<span class="material-symbols-outlined text-2xl" data-icon="webhook">webhook</span>
+</div>
+<div>
+<p class="font-h3 text-h3">Production Webhook</p>
+<p class="text-metadata font-code text-on-surface-variant">https://api.pcc-control.com/v1/events</p>
+</div>
+</div>
+<div class="flex items-center space-x-4">
+<div class="flex items-center text-green-600 text-metadata font-bold">
+<span class="w-2 h-2 rounded-full bg-green-600 mr-2"></span>
+                                            Healthy
+                                        </div>
+<button class="bg-stone-100 hover:bg-stone-200 text-on-surface-variant px-3 py-1.5 rounded-lg text-metadata font-bold flex items-center transition-colors">
+<span class="material-symbols-outlined text-sm mr-1" data-icon="sync">sync</span>
+                                            Sync
+                                        </button>
+</div>
+</div>
+<div class="p-4 border border-stone-100 rounded-lg flex items-center justify-between opacity-60">
+<div class="flex items-center space-x-4">
+<div class="p-2 bg-stone-100 rounded text-stone-400">
+<span class="material-symbols-outlined text-2xl" data-icon="slack">chat_bubble</span>
+</div>
+<div>
+<p class="font-h3 text-h3">Slack Notifications</p>
+<p class="text-metadata text-on-surface-variant">Not connected</p>
+</div>
+</div>
+<button class="bg-primary text-white px-4 py-1.5 rounded-lg text-metadata font-bold transition-colors">Connect</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Danger Zone Settings Pane -->
+<section class="tab-pane hidden space-y-6" id="pane-danger">
+<div class="bg-white rounded-xl shadow-sm border border-error p-6 bg-error-container/5">
+<h3 class="text-h2 font-h2 text-error mb-2">Danger Zone</h3>
+<p class="text-on-surface-variant mb-6">These actions are irreversible and will permanently affect your project data.</p>
+<div class="space-y-6">
+<div class="flex items-center justify-between py-4 border-t border-error/10">
+<div>
+<p class="font-h3 text-h3">Archive Project</p>
+<p class="text-metadata text-on-surface-variant">Make project read-only for all members.</p>
+</div>
+<button class="border border-stone-300 hover:bg-stone-50 px-4 py-2 rounded-lg text-body font-body font-bold transition-colors">Archive</button>
+</div>
+<div class="flex items-center justify-between py-4 border-t border-error/10">
+<div>
+<p class="font-h3 text-h3">Delete Project</p>
+<p class="text-metadata text-on-surface-variant">Permanently remove this project and all its tasks, files, and members.</p>
+</div>
+<button class="bg-error hover:bg-on-error-container text-white px-4 py-2 rounded-lg text-body font-body font-bold transition-colors">Delete Project</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+</div>
+</main>
+<script>
+        function switchTab(tabId) {
+            // Hide all panes
+            const panes = document.querySelectorAll('.tab-pane');
+            panes.forEach(pane => pane.classList.add('hidden'));
+            
+            // Show selected pane
+            document.getElementById('pane-' + tabId).classList.remove('hidden');
+            
+            // Reset button styles
+            const buttons = document.querySelectorAll('.tab-trigger');
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-white', 'shadow-sm', 'border', 'border-stone-200', 'text-primary', 'font-bold');
+                btn.classList.add('text-on-surface-variant', 'hover:bg-stone-100');
+            });
+            
+            // Highlight active button
+            const activeBtn = document.getElementById('tab-btn-' + tabId);
+            activeBtn.classList.add('bg-white', 'shadow-sm', 'border', 'border-stone-200', 'text-primary', 'font-bold');
+            activeBtn.classList.remove('text-on-surface-variant', 'hover:bg-stone-100');
+            
+            // Specialized logic for Danger Zone button color
+            if(tabId === 'danger') {
+                activeBtn.classList.remove('text-primary');
+                activeBtn.classList.add('text-error');
+            } else {
+                document.getElementById('tab-btn-danger').classList.add('text-error');
+            }
+        }
+    </script>
+</body></html>

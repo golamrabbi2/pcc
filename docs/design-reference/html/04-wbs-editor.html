@@ -1,0 +1,408 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>PCC - WBS Editor</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#93000a",
+                        "surface-tint": "#0053db",
+                        "on-primary-fixed": "#00174b",
+                        "surface-container-high": "#e7e7f3",
+                        "primary": "#004ac6",
+                        "tertiary": "#943700",
+                        "on-primary-container": "#eeefff",
+                        "on-background": "#191b23",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "on-tertiary-fixed": "#360f00",
+                        "surface-container-low": "#f3f3fe",
+                        "background": "#faf8ff",
+                        "secondary-fixed": "#e2e2e2",
+                        "surface-container": "#ededf9",
+                        "outline": "#737686",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "secondary-container": "#e2e2e2",
+                        "secondary": "#5d5f5e",
+                        "surface-container-highest": "#e1e2ed",
+                        "on-secondary-container": "#636564",
+                        "on-error": "#ffffff",
+                        "on-tertiary-container": "#ffede6",
+                        "outline-variant": "#c3c6d7",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "surface-dim": "#d9d9e5",
+                        "on-surface": "#191b23",
+                        "error": "#ba1a1a",
+                        "inverse-primary": "#b4c5ff",
+                        "primary-fixed": "#dbe1ff",
+                        "on-secondary-fixed-variant": "#454747",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#c6c7c6",
+                        "inverse-on-surface": "#f0f0fb",
+                        "surface": "#faf8ff",
+                        "surface-bright": "#faf8ff",
+                        "surface-variant": "#e1e2ed",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "on-primary": "#ffffff",
+                        "on-surface-variant": "#434655",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed": "#ffdbcd",
+                        "primary-container": "#2563eb",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed-variant": "#7d2d00",
+                        "tertiary-container": "#bc4800",
+                        "inverse-surface": "#2e3039",
+                        "on-secondary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base_grid": "4px",
+                        "sidebar_width": "240px",
+                        "padding_lg": "24px",
+                        "max_width": "1280px",
+                        "gutter": "24px",
+                        "padding_md": "16px",
+                        "padding_sm": "8px"
+                    },
+                    "fontFamily": {
+                        "h2": ["Inter"],
+                        "metadata": ["Inter"],
+                        "h3": ["Inter"],
+                        "body": ["Inter"],
+                        "h1": ["Inter"],
+                        "code": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "h2": ["18px", {"lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "metadata": ["12px", {"lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                        "h3": ["15px", {"lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "600"}],
+                        "body": ["14px", {"lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400"}],
+                        "h1": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "code": ["12px", {"lineHeight": "16px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { background-color: #FAFAF9; }
+        .wbs-tree-line::before {
+            content: '';
+            position: absolute;
+            left: -16px;
+            top: -12px;
+            bottom: 24px;
+            width: 1px;
+            background-color: #E7E5E4;
+        }
+        .wbs-tree-node::after {
+            content: '';
+            position: absolute;
+            left: -16px;
+            top: 24px;
+            width: 16px;
+            height: 1px;
+            background-color: #E7E5E4;
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #E7E5E4; border-radius: 10px; }
+        .sheet-shadow { box-shadow: -4px 0 24px rgba(0,0,0,0.06); }
+    </style>
+</head>
+<body class="font-body text-body text-on-surface overflow-hidden">
+<!-- App Container -->
+<div class="flex h-screen w-full">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full w-[240px] bg-[#1C1917] flex flex-col py-padding_lg z-50">
+<div class="px-6 mb-10">
+<h1 class="text-h1 font-h1 text-white tracking-tight">PCC</h1>
+<p class="text-xs text-outline-variant font-medium opacity-60">Project Control Center</p>
+</div>
+<nav class="flex-grow space-y-1">
+<a class="flex items-center px-6 py-3 text-outline-variant hover:bg-on-surface-variant/20 hover:text-white transition-all duration-200" href="#">
+<span class="material-symbols-outlined mr-3">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center px-6 py-3 text-white border-l-4 border-primary bg-on-surface-variant/10 transition-all duration-200" href="#">
+<span class="material-symbols-outlined mr-3">account_tree</span>
+<span>WBS</span>
+</a>
+<a class="flex items-center px-6 py-3 text-outline-variant hover:bg-on-surface-variant/20 hover:text-white transition-all duration-200" href="#">
+<span class="material-symbols-outlined mr-3">monitor_heart</span>
+<span>Health</span>
+</a>
+<a class="flex items-center px-6 py-3 text-outline-variant hover:bg-on-surface-variant/20 hover:text-white transition-all duration-200" href="#">
+<span class="material-symbols-outlined mr-3">assignment_turned_in</span>
+<span>Handover</span>
+</a>
+<a class="flex items-center px-6 py-3 text-outline-variant hover:bg-on-surface-variant/20 hover:text-white transition-all duration-200" href="#">
+<span class="material-symbols-outlined mr-3">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<div class="px-6 mt-auto">
+<a class="flex items-center py-3 text-outline-variant hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined mr-3">account_circle</span>
+<span>Profile</span>
+</a>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="ml-[240px] flex-grow flex flex-col overflow-hidden">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center h-16 px-padding_lg bg-surface border-b border-outline-variant shrink-0">
+<div class="flex items-center space-x-6">
+<span class="text-h2 font-h2 text-on-surface">PCC</span>
+<nav class="hidden md:flex space-x-4">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-medium" href="#">Projects</a>
+<a class="text-primary font-bold" href="#">Current Workspace</a>
+</nav>
+</div>
+<div class="flex items-center space-x-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center overflow-hidden border border-outline-variant">
+<img alt="User Avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA25jTCQUEkJnh_mbjMuL2y78FdA8RfGz_haWKS6dQeF_cE0qs0DBE-g42gT_eyVX409dVuhokV_gawk_xjUh3sA_GFT_xKtzcngpDcSnW-v5WT8Cy25uf-dVWQSbP9KMiIkEzvpL61DpQOJqgbSqWj6iew8-THhtDc76Qub_ZzOsdLuic9ujKZmS5NhiX4LZxSt0tD_A1cIjZcf6LODNwYyiLXqtSRgblZldCqqgX925SOI-K4mY2bxUuKJ08iMIhJpD4zrvJOtoCM">
+</div>
+</div>
+</header>
+<!-- WBS Toolbar -->
+<section class="h-14 bg-white border-b border-outline-variant px-padding_lg flex items-center justify-between shrink-0">
+<div class="flex items-center space-x-2">
+<button class="inline-flex items-center px-3 py-1.5 bg-primary text-white text-sm font-semibold rounded-lg hover:bg-primary/90 transition-colors">
+<span class="material-symbols-outlined text-[18px] mr-2">add</span>
+                        Add root
+                    </button>
+<button class="inline-flex items-center px-3 py-1.5 bg-stone-100 text-stone-800 text-sm font-semibold rounded-lg hover:bg-stone-200 transition-colors">
+<span class="material-symbols-outlined text-[18px] mr-2">file_upload</span>
+                        Import from template
+                    </button>
+<button class="inline-flex items-center px-3 py-1.5 border border-outline-variant text-on-surface-variant text-sm font-semibold rounded-lg hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-[18px] mr-2">history</span>
+                        Save baseline
+                    </button>
+</div>
+<div>
+<button class="text-on-surface-variant hover:text-on-surface flex items-center text-sm font-medium">
+<span class="material-symbols-outlined mr-1">arrow_back</span>
+                        Back to dashboard
+                    </button>
+</div>
+</section>
+<!-- Content Area: WBS Tree -->
+<div class="flex-grow overflow-auto bg-[#FAFAF9] p-8 custom-scrollbar">
+<div class="max-w-[1000px] mx-auto pb-24">
+<!-- Root Node -->
+<div class="relative mb-6">
+<div class="group flex items-center bg-white border border-outline-variant p-4 rounded-xl shadow-sm hover:ring-2 hover:ring-primary/20 transition-all cursor-pointer" onclick="toggleEditor()">
+<span class="material-symbols-outlined text-outline-variant cursor-grab active:cursor-grabbing mr-3">drag_indicator</span>
+<div class="w-2 h-2 rounded-full bg-emerald-500 mr-4"></div>
+<div class="flex-grow">
+<h3 class="font-h3 text-on-surface">Phase 1: Project Initiation &amp; Architecture</h3>
+<div class="flex items-center mt-1 space-x-3">
+<span class="px-2 py-0.5 bg-primary/10 text-primary text-xs font-semibold rounded-full">IN PROGRESS</span>
+<span class="text-xs text-on-surface-variant">Owner: Sarah Chen</span>
+</div>
+</div>
+<button class="p-1 hover:bg-surface-container rounded-md">
+<span class="material-symbols-outlined text-outline">more_vert</span>
+</button>
+</div>
+<!-- Level 1 Children -->
+<div class="ml-12 mt-4 space-y-4">
+<!-- Child Node 1 -->
+<div class="relative wbs-tree-line wbs-tree-node">
+<div class="group flex items-center bg-white border border-outline-variant p-4 rounded-xl shadow-sm hover:ring-2 hover:ring-primary/20 transition-all cursor-pointer" onclick="toggleEditor()">
+<span class="material-symbols-outlined text-outline-variant mr-3">drag_indicator</span>
+<div class="w-2 h-2 rounded-full bg-emerald-500 mr-4"></div>
+<div class="flex-grow">
+<h3 class="font-h3 text-on-surface">1.1 Core Engine Design</h3>
+<div class="flex items-center mt-1 space-x-3">
+<span class="px-2 py-0.5 bg-emerald-100 text-emerald-700 text-xs font-semibold rounded-full">COMPLETED</span>
+<span class="text-xs text-on-surface-variant">42 hrs estimated</span>
+</div>
+</div>
+<button class="p-1 hover:bg-surface-container rounded-md">
+<span class="material-symbols-outlined text-outline">more_vert</span>
+</button>
+</div>
+<!-- Level 2 Children -->
+<div class="ml-12 mt-4 space-y-3">
+<div class="relative wbs-tree-line wbs-tree-node">
+<div class="group flex items-center bg-white border border-stone-200 p-3 rounded-lg shadow-sm hover:ring-1 hover:ring-primary transition-all cursor-pointer" onclick="toggleEditor()">
+<span class="material-symbols-outlined text-outline-variant mr-2 scale-75">drag_indicator</span>
+<div class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-3"></div>
+<div class="flex-grow">
+<h4 class="text-sm font-semibold text-on-surface">1.1.1 Shader Pipeline Architecture</h4>
+</div>
+<span class="text-[10px] bg-stone-100 px-1.5 py-0.5 rounded text-stone-500 font-mono">ID: WBS-421</span>
+</div>
+</div>
+<div class="relative wbs-tree-line wbs-tree-node">
+<div class="group flex items-center bg-white border border-stone-200 p-3 rounded-lg shadow-sm hover:ring-1 hover:ring-primary transition-all cursor-pointer" onclick="toggleEditor()">
+<span class="material-symbols-outlined text-outline-variant mr-2 scale-75">drag_indicator</span>
+<div class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-3"></div>
+<div class="flex-grow">
+<h4 class="text-sm font-semibold text-on-surface">1.1.2 Asset Loading Logic</h4>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Child Node 2 -->
+<div class="relative wbs-tree-line wbs-tree-node">
+<div class="group flex items-center bg-white border border-outline-variant p-4 rounded-xl shadow-sm hover:ring-2 hover:ring-primary/20 transition-all cursor-pointer" onclick="toggleEditor()">
+<span class="material-symbols-outlined text-outline-variant mr-3">drag_indicator</span>
+<div class="w-2 h-2 rounded-full bg-red-500 mr-4 animate-pulse"></div>
+<div class="flex-grow">
+<h3 class="font-h3 text-on-surface">1.2 Database Schema Optimization</h3>
+<div class="flex items-center mt-1 space-x-3">
+<span class="px-2 py-0.5 bg-error-container text-on-error-container text-xs font-semibold rounded-full">DELAYED</span>
+<span class="text-xs text-on-surface-variant">Owner: Michael R.</span>
+</div>
+</div>
+<button class="p-1 hover:bg-surface-container rounded-md">
+<span class="material-symbols-outlined text-outline">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Root Node 2 -->
+<div class="relative">
+<div class="group flex items-center bg-white border border-outline-variant p-4 rounded-xl shadow-sm hover:ring-2 hover:ring-primary/20 transition-all cursor-pointer" onclick="toggleEditor()">
+<span class="material-symbols-outlined text-outline-variant mr-3">drag_indicator</span>
+<div class="w-2 h-2 rounded-full bg-stone-300 mr-4"></div>
+<div class="flex-grow">
+<h3 class="font-h3 text-on-surface">Phase 2: Frontend Integration</h3>
+<div class="flex items-center mt-1 space-x-3">
+<span class="px-2 py-0.5 bg-stone-100 text-stone-600 text-xs font-semibold rounded-full">PLANNED</span>
+</div>
+</div>
+<button class="p-1 hover:bg-surface-container rounded-md">
+<span class="material-symbols-outlined text-outline">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Right Panel Sheet (Edit Node) -->
+<div class="fixed right-0 top-0 h-full w-[400px] bg-white sheet-shadow transform translate-x-full transition-transform duration-300 ease-in-out z-[60] flex flex-col" id="nodeEditor">
+<div class="p-6 border-b border-outline-variant flex items-center justify-between">
+<h2 class="text-h2 font-h2">Edit WBS Node</h2>
+<button class="p-2 hover:bg-stone-100 rounded-full transition-colors" onclick="toggleEditor()">
+<span class="material-symbols-outlined text-on-surface-variant">close</span>
+</button>
+</div>
+<div class="flex-grow overflow-y-auto p-6 space-y-6 custom-scrollbar">
+<!-- Title Field -->
+<div class="space-y-1.5">
+<label class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Node Title</label>
+<input class="w-full px-4 py-2 border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none" type="text" value="Phase 1: Project Initiation &amp; Architecture">
+</div>
+<!-- Description -->
+<div class="space-y-1.5">
+<label class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Description</label>
+<textarea class="w-full px-4 py-2 border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none resize-none" rows="4">Define the architectural foundation and initial project setup including environment variables, database staging, and CI/CD pipelines.</textarea>
+</div>
+<!-- Dates -->
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-1.5">
+<label class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Start Date</label>
+<input class="w-full px-3 py-2 border border-outline-variant rounded-lg text-sm outline-none" type="date" value="2023-11-01">
+</div>
+<div class="space-y-1.5">
+<label class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">End Date</label>
+<input class="w-full px-3 py-2 border border-outline-variant rounded-lg text-sm outline-none" type="date" value="2023-12-15">
+</div>
+</div>
+<!-- Assignee & Branch -->
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-1.5">
+<label class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Assignee</label>
+<select class="w-full px-3 py-2 border border-outline-variant rounded-lg text-sm outline-none bg-white">
+<option>Sarah Chen</option>
+<option>Michael R.</option>
+<option>David K.</option>
+</select>
+</div>
+<div class="space-y-1.5">
+<label class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Branch</label>
+<select class="w-full px-3 py-2 border border-outline-variant rounded-lg text-sm outline-none bg-white">
+<option>feat/arch-setup</option>
+<option>main</option>
+<option>develop</option>
+</select>
+</div>
+</div>
+<!-- Status & Estimates -->
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-1.5">
+<label class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Status</label>
+<select class="w-full px-3 py-2 border border-outline-variant rounded-lg text-sm outline-none bg-white">
+<option>In Progress</option>
+<option>Completed</option>
+<option>Delayed</option>
+<option>Planned</option>
+</select>
+</div>
+<div class="space-y-1.5">
+<label class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Est. Hours</label>
+<input class="w-full px-3 py-2 border border-outline-variant rounded-lg text-sm outline-none" type="number" value="120">
+</div>
+</div>
+<!-- GitHub Branch Card -->
+<div class="p-4 bg-on-surface-variant/5 rounded-xl border border-outline-variant/30 flex items-center space-x-4">
+<div class="w-10 h-10 bg-on-surface text-white rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined">code</span>
+</div>
+<div>
+<p class="text-sm font-semibold">feat/arch-setup</p>
+<p class="text-xs text-on-surface-variant">Last synced 2h ago</p>
+</div>
+</div>
+</div>
+<!-- Footer Buttons -->
+<div class="p-6 border-t border-outline-variant bg-stone-50 flex space-x-3">
+<button class="flex-grow py-2.5 bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-colors shadow-lg shadow-primary/10" onclick="toggleEditor()">Save Changes</button>
+<button class="flex-grow py-2.5 bg-white border border-outline-variant text-on-surface-variant font-bold rounded-lg hover:bg-stone-100 transition-colors" onclick="toggleEditor()">Cancel</button>
+</div>
+</div>
+</div>
+<!-- Micro-interactions Script -->
+<script>
+        const nodeEditor = document.getElementById('nodeEditor');
+        let isEditorOpen = false;
+
+        function toggleEditor() {
+            isEditorOpen = !isEditorOpen;
+            if (isEditorOpen) {
+                nodeEditor.classList.remove('translate-x-full');
+            } else {
+                nodeEditor.classList.add('translate-x-full');
+            }
+        }
+
+        // Handle Escape Key to close editor
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && isEditorOpen) toggleEditor();
+        });
+
+        // Simple Click-to-Dismiss on Backdrop simulation
+        // (In a real app, this would be a formal modal backdrop)
+    </script>
+</body></html>

@@ -1,0 +1,398 @@
+<!DOCTYPE html><html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#93000a",
+                        "surface-tint": "#0053db",
+                        "on-primary-fixed": "#00174b",
+                        "surface-container-high": "#e7e7f3",
+                        "primary": "#004ac6",
+                        "tertiary": "#943700",
+                        "on-primary-container": "#eeefff",
+                        "on-background": "#191b23",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "on-tertiary-fixed": "#360f00",
+                        "surface-container-low": "#f3f3fe",
+                        "background": "#faf8ff",
+                        "secondary-fixed": "#e2e2e2",
+                        "surface-container": "#ededf9",
+                        "outline": "#737686",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "secondary-container": "#e2e2e2",
+                        "secondary": "#5d5f5e",
+                        "surface-container-highest": "#e1e2ed",
+                        "on-secondary-container": "#636564",
+                        "on-error": "#ffffff",
+                        "on-tertiary-container": "#ffede6",
+                        "outline-variant": "#c3c6d7",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "surface-dim": "#d9d9e5",
+                        "on-surface": "#191b23",
+                        "error": "#ba1a1a",
+                        "inverse-primary": "#b4c5ff",
+                        "primary-fixed": "#dbe1ff",
+                        "on-secondary-fixed-variant": "#454747",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#c6c7c6",
+                        "inverse-on-surface": "#f0f0fb",
+                        "surface": "#faf8ff",
+                        "surface-bright": "#faf8ff",
+                        "surface-variant": "#e1e2ed",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "on-primary": "#ffffff",
+                        "on-surface-variant": "#434655",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed": "#ffdbcd",
+                        "primary-container": "#2563eb",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed-variant": "#7d2d00",
+                        "tertiary-container": "#bc4800",
+                        "inverse-surface": "#2e3039",
+                        "on-secondary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base_grid": "4px",
+                        "sidebar_width": "240px",
+                        "padding_lg": "24px",
+                        "max_width": "1280px",
+                        "gutter": "24px",
+                        "padding_md": "16px",
+                        "padding_sm": "8px"
+                    },
+                    "fontFamily": {
+                        "h2": ["Inter"],
+                        "metadata": ["Inter"],
+                        "h3": ["Inter"],
+                        "body": ["Inter"],
+                        "h1": ["Inter"],
+                        "code": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "h2": ["18px", {"lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "metadata": ["12px", {"lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                        "h3": ["15px", {"lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "600"}],
+                        "body": ["14px", {"lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400"}],
+                        "h1": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "code": ["12px", {"lineHeight": "16px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #FAFAF9; }
+        .wizard-step-active { background-color: #004ac6; color: white; }
+        .wizard-step-inactive { background-color: #E7E5E4; color: #737686; }
+        .wizard-line { height: 2px; flex-grow: 1; background-color: #E7E5E4; margin: 0 12px; }
+        .wizard-line-active { background-color: #004ac6; }
+        .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(8px); border: 1px solid #E7E5E4; }
+        .custom-shadow { box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        .wbs-node { border: 1px solid #E7E5E4; transition: all 0.2s ease; }
+        .wbs-node:hover { border-color: #004ac6; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+    </style>
+</head>
+<body class="bg-surface-container-lowest min-h-screen flex items-center justify-center p-gutter">
+<!-- Project Setup Wizard Container -->
+<main class="w-full max-w-[800px] glass-card rounded-xl custom-shadow overflow-hidden flex flex-col">
+<!-- Header & Step Indicator -->
+<header class="p-padding_lg bg-white border-b border-outline-variant">
+<div class="flex items-center justify-between mb-8">
+<div>
+<h1 class="font-h1 text-h1 text-on-surface">Project Setup Wizard</h1>
+<p class="font-body text-body text-on-surface-variant mt-1">Configure your new Project Control Center workspace.</p>
+</div>
+<button class="p-2 hover:bg-surface-container rounded-full transition-colors" onclick="window.history.back()">
+<span class="material-symbols-outlined text-on-surface-variant">close</span>
+</button>
+</div>
+<!-- Steps -->
+<div class="flex items-center justify-between px-padding_md">
+<div class="flex flex-col items-center gap-2">
+<div class="w-10 h-10 rounded-full flex items-center justify-center wizard-step-active font-h2 text-h2" id="step-1-circle">1</div>
+<span class="font-metadata text-metadata font-semibold text-primary">Basics</span>
+</div>
+<div class="wizard-line" id="line-1"></div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-10 h-10 rounded-full flex items-center justify-center wizard-step-inactive font-h2 text-h2" id="step-2-circle">2</div>
+<span class="font-metadata text-metadata">WBS</span>
+</div>
+<div class="wizard-line" id="line-2"></div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-10 h-10 rounded-full flex items-center justify-center wizard-step-inactive font-h2 text-h2" id="step-3-circle">3</div>
+<span class="font-metadata text-metadata">GitHub</span>
+</div>
+<div class="wizard-line" id="line-3"></div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-10 h-10 rounded-full flex items-center justify-center wizard-step-inactive font-h2 text-h2" id="step-4-circle">4</div>
+<span class="font-metadata text-metadata">Review</span>
+</div>
+</div>
+</header>
+<!-- Content Area -->
+<div class="flex-grow p-padding_lg overflow-y-auto max-h-[614px]">
+<!-- Step 1: Basics -->
+<section class="space-y-6" id="content-1">
+<div class="grid grid-cols-1 gap-6">
+<div class="space-y-2">
+<label class="font-h3 text-h3 text-on-surface">Project Name</label>
+<input class="w-full px-4 py-3 rounded-lg border border-outline-variant focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="e.g. Phoenix Infrastructure Upgrade" type="text">
+</div>
+<div class="space-y-2">
+<label class="font-h3 text-h3 text-on-surface">Description</label>
+<textarea class="w-full px-4 py-3 rounded-lg border border-outline-variant focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="Briefly describe the project objectives and scope..." rows="4"></textarea>
+</div>
+<div class="space-y-2">
+<label class="font-h3 text-h3 text-on-surface">Team Members</label>
+<div class="flex flex-wrap gap-2 p-3 border border-outline-variant rounded-lg bg-white">
+<span class="flex items-center gap-1 bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-metadata font-medium">
+                                Sarah Chen (Lead) <span class="material-symbols-outlined text-[14px] cursor-pointer">close</span>
+</span>
+<span class="flex items-center gap-1 bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-metadata font-medium">
+                                Marcus Wright <span class="material-symbols-outlined text-[14px] cursor-pointer">close</span>
+</span>
+<input class="border-none focus:ring-0 text-body p-0 ml-2 min-w-[120px]" placeholder="Add email..." type="text">
+</div>
+</div>
+</div>
+</section>
+<!-- Step 2: WBS Builder -->
+<section class="hidden space-y-6" id="content-2">
+<div class="flex items-center justify-between">
+<h2 class="font-h2 text-h2 text-on-surface">Work Breakdown Structure</h2>
+<div class="flex gap-2">
+<button class="px-3 py-1.5 border border-outline-variant rounded flex items-center gap-2 hover:bg-surface transition-colors text-metadata font-medium">
+<span class="material-symbols-outlined text-[18px]">account_tree</span> Auto-layout
+                        </button>
+</div>
+</div>
+<div class="p-8 border-2 border-dashed border-outline-variant rounded-xl bg-surface-container-low min-h-[300px] flex flex-col items-center">
+<!-- Tree Root -->
+<div class="wbs-node bg-white p-4 rounded-lg w-64 shadow-sm relative mb-12">
+<div class="flex items-center justify-between mb-2">
+<span class="text-metadata font-bold text-primary">1.0</span>
+<span class="material-symbols-outlined text-outline text-[18px] cursor-grab">drag_indicator</span>
+</div>
+<input class="border-none p-0 font-h3 text-h3 w-full focus:ring-0" type="text" value="Project Initiation">
+<div class="flex justify-center gap-4 mt-4 absolute -bottom-10 left-0 right-0">
+<button class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center hover:scale-110 transition-transform" title="Add Child">
+<span class="material-symbols-outlined text-[20px]">south</span>
+</button>
+<button class="bg-secondary text-white w-8 h-8 rounded-full flex items-center justify-center hover:scale-110 transition-transform" title="Add Sibling">
+<span class="material-symbols-outlined text-[20px]">east</span>
+</button>
+</div>
+</div>
+<!-- Example Child Node -->
+<div class="flex gap-8">
+<div class="wbs-node bg-white p-4 rounded-lg w-56 shadow-sm border-l-4 border-l-primary">
+<div class="flex items-center justify-between mb-2">
+<span class="text-metadata font-bold text-primary">1.1</span>
+<span class="material-symbols-outlined text-outline text-[18px] cursor-grab">drag_indicator</span>
+</div>
+<input class="border-none p-0 font-h3 text-h3 w-full focus:ring-0" type="text" value="Stakeholder Analysis">
+</div>
+<div class="wbs-node bg-white p-4 rounded-lg w-56 shadow-sm border-l-4 border-l-primary/40">
+<div class="flex items-center justify-between mb-2">
+<span class="text-metadata font-bold text-outline">1.2</span>
+<span class="material-symbols-outlined text-outline text-[18px] cursor-grab">drag_indicator</span>
+</div>
+<input class="border-none p-0 font-h3 text-h3 w-full focus:ring-0" placeholder="Enter task..." type="text">
+</div>
+</div>
+</div>
+</section>
+<!-- Step 3: GitHub Integration -->
+<section class="hidden space-y-8 py-4" id="content-3">
+<div class="text-center space-y-4 max-w-md mx-auto">
+<div class="w-16 h-16 bg-on-background text-white rounded-2xl flex items-center justify-center mx-auto mb-4">
+<span class="material-symbols-outlined text-[40px]">terminal</span>
+</div>
+<h2 class="font-h1 text-h1 text-on-surface">Sync Source Control</h2>
+<p class="font-body text-body text-on-surface-variant">Connect your GitHub repositories to track commits, PRs, and deployment health directly in the Project Control Center.</p>
+<button class="w-full h-[44px] bg-on-background text-white rounded-lg flex items-center justify-center gap-3 font-semibold hover:opacity-90 transition-opacity" id="connect-github">
+<svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path></svg>
+                        Connect GitHub Account
+                    </button>
+</div>
+<div class="hidden space-y-4 animate-in fade-in duration-500" id="repo-list">
+<h3 class="font-h3 text-h3 text-on-surface">Select Repositories</h3>
+<div class="space-y-2">
+<div class="flex items-center justify-between p-4 border border-outline-variant rounded-lg bg-white hover:border-primary cursor-pointer transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant">folder</span>
+<div>
+<p class="font-h3 text-h3 text-on-surface">pcc-core-platform</p>
+<p class="font-metadata text-metadata text-on-surface-variant">Last updated 2 hours ago</p>
+</div>
+</div>
+<input checked="" class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary" type="checkbox">
+</div>
+<div class="flex items-center justify-between p-4 border border-outline-variant rounded-lg bg-white hover:border-primary cursor-pointer transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant">folder</span>
+<div>
+<p class="font-h3 text-h3 text-on-surface">infra-deployment-scripts</p>
+<p class="font-metadata text-metadata text-on-surface-variant">Last updated yesterday</p>
+</div>
+</div>
+<input class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary" type="checkbox">
+</div>
+</div>
+</div>
+</section>
+<!-- Step 4: Review -->
+<section class="hidden space-y-6" id="content-4">
+<div class="bg-primary-container/10 p-6 rounded-xl border border-primary-fixed-dim">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-12 h-12 bg-primary rounded-xl flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[32px]">rocket_launch</span>
+</div>
+<div>
+<h2 class="font-h2 text-h2 text-on-surface">Phoenix Infrastructure Upgrade</h2>
+<p class="font-metadata text-metadata text-on-surface-variant">Ready for deployment</p>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-white p-4 rounded-lg border border-outline-variant">
+<p class="font-metadata text-metadata text-on-surface-variant uppercase tracking-wider mb-1">Team Size</p>
+<p class="font-h1 text-h1 text-on-surface">12 <span class="text-body font-normal text-on-surface-variant">members</span></p>
+</div>
+<div class="bg-white p-4 rounded-lg border border-outline-variant">
+<p class="font-metadata text-metadata text-on-surface-variant uppercase tracking-wider mb-1">WBS Nodes</p>
+<p class="font-h1 text-h1 text-on-surface">24 <span class="text-body font-normal text-on-surface-variant">tasks</span></p>
+</div>
+<div class="bg-white p-4 rounded-lg border border-outline-variant">
+<p class="font-metadata text-metadata text-on-surface-variant uppercase tracking-wider mb-1">Connected Repos</p>
+<p class="font-h1 text-h1 text-on-surface">1 <span class="text-body font-normal text-on-surface-variant">active</span></p>
+</div>
+<div class="bg-white p-4 rounded-lg border border-outline-variant">
+<p class="font-metadata text-metadata text-on-surface-variant uppercase tracking-wider mb-1">Timeline</p>
+<p class="font-h1 text-h1 text-on-surface">Q3-Q4 <span class="text-body font-normal text-on-surface-variant">2024</span></p>
+</div>
+</div>
+</div>
+<div class="p-4 border border-outline-variant rounded-lg bg-surface flex items-start gap-3">
+<span class="material-symbols-outlined text-primary">info</span>
+<p class="font-body text-body text-on-surface-variant">By launching this project, all team members will receive an automated invitation to the workspace and access to the connected GitHub repositories.</p>
+</div>
+</section>
+</div>
+<!-- Sticky Footer Actions -->
+<footer class="p-padding_lg bg-surface-container border-t border-outline-variant flex justify-between items-center">
+<button class="px-6 h-[44px] text-on-surface font-semibold hover:bg-surface-container-highest rounded-lg transition-colors invisible" id="prev-btn">
+                Back
+            </button>
+<div class="flex gap-4">
+<button class="px-6 h-[44px] text-secondary font-semibold hover:bg-surface-container-highest rounded-lg transition-colors" id="cancel-btn">
+                    Save Draft
+                </button>
+<button class="px-8 h-[44px] bg-primary text-white font-semibold rounded-lg hover:bg-primary/90 transition-all shadow-md shadow-primary/20" id="next-btn">
+                    Next Step
+                </button>
+</div>
+</footer>
+</main>
+<script>
+        let currentStep = 1;
+        const totalSteps = 4;
+
+        const nextBtn = document.getElementById('next-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const connectGithubBtn = document.getElementById('connect-github');
+        const repoList = document.getElementById('repo-list');
+
+        function updateUI() {
+            // Update Circles and Lines
+            for (let i = 1; i <= totalSteps; i++) {
+                const circle = document.getElementById(`step-${i}-circle`);
+                const content = document.getElementById(`content-${i}`);
+                const line = document.getElementById(`line-${i}`);
+
+                if (i === currentStep) {
+                    circle.classList.remove('wizard-step-inactive');
+                    circle.classList.add('wizard-step-active');
+                    content.classList.remove('hidden');
+                } else {
+                    circle.classList.remove('wizard-step-active');
+                    circle.classList.add('wizard-step-inactive');
+                    content.classList.add('hidden');
+                }
+
+                // Line logic
+                if (line) {
+                    if (i < currentStep) {
+                        line.classList.add('wizard-line-active');
+                    } else {
+                        line.classList.remove('wizard-line-active');
+                    }
+                }
+            }
+
+            // Button visibility
+            prevBtn.style.visibility = currentStep === 1 ? 'hidden' : 'visible';
+            
+            if (currentStep === totalSteps) {
+                nextBtn.innerText = 'Launch Project';
+                nextBtn.classList.replace('bg-primary', 'bg-tertiary-container');
+            } else {
+                nextBtn.innerText = 'Next Step';
+                nextBtn.classList.replace('bg-tertiary-container', 'bg-primary');
+            }
+        }
+
+        nextBtn.addEventListener('click', () => {
+            if (currentStep < totalSteps) {
+                currentStep++;
+                updateUI();
+            } else {
+                // Final Action: Launch
+                nextBtn.disabled = true;
+                nextBtn.innerHTML = `<span class="flex items-center gap-2"><svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Launching...</span>`;
+                setTimeout(() => {
+                    alert('Project "Phoenix Infrastructure Upgrade" has been successfully initialized!');
+                    window.location.reload();
+                }, 1500);
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentStep > 1) {
+                currentStep--;
+                updateUI();
+            }
+        });
+
+        connectGithubBtn.addEventListener('click', () => {
+            connectGithubBtn.innerHTML = `<span class="animate-pulse">Authorizing...</span>`;
+            setTimeout(() => {
+                connectGithubBtn.classList.add('hidden');
+                repoList.classList.remove('hidden');
+            }, 1000);
+        });
+
+        // Simple animation logic for WBS nodes
+        document.querySelectorAll('.wbs-node').forEach(node => {
+            node.addEventListener('mousedown', () => {
+                node.style.transform = 'scale(0.98)';
+            });
+            node.addEventListener('mouseup', () => {
+                node.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body></html>

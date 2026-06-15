@@ -1,0 +1,266 @@
+<!DOCTYPE html><html class="h-full" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>PCC - Create Account</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error-container": "#93000a",
+                    "surface-tint": "#0053db",
+                    "on-primary-fixed": "#00174b",
+                    "surface-container-high": "#e7e7f3",
+                    "primary": "#004ac6",
+                    "tertiary": "#943700",
+                    "on-primary-container": "#eeefff",
+                    "on-background": "#191b23",
+                    "tertiary-fixed-dim": "#ffb596",
+                    "on-tertiary-fixed": "#360f00",
+                    "surface-container-low": "#f3f3fe",
+                    "background": "#faf8ff",
+                    "secondary-fixed": "#e2e2e2",
+                    "surface-container": "#ededf9",
+                    "outline": "#737686",
+                    "on-secondary-fixed": "#1a1c1c",
+                    "secondary-container": "#e2e2e2",
+                    "secondary": "#5d5f5e",
+                    "surface-container-highest": "#e1e2ed",
+                    "on-secondary-container": "#636564",
+                    "on-error": "#ffffff",
+                    "on-tertiary-container": "#ffede6",
+                    "outline-variant": "#c3c6d7",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "surface-dim": "#d9d9e5",
+                    "on-surface": "#191b23",
+                    "error": "#ba1a1a",
+                    "inverse-primary": "#b4c5ff",
+                    "primary-fixed": "#dbe1ff",
+                    "on-secondary-fixed-variant": "#454747",
+                    "error-container": "#ffdad6",
+                    "secondary-fixed-dim": "#c6c7c6",
+                    "inverse-on-surface": "#f0f0fb",
+                    "surface": "#faf8ff",
+                    "surface-bright": "#faf8ff",
+                    "surface-variant": "#e1e2ed",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "on-primary": "#ffffff",
+                    "on-surface-variant": "#434655",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed": "#ffdbcd",
+                    "primary-container": "#2563eb",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed-variant": "#7d2d00",
+                    "tertiary-fixed": "#ffdbcd",
+                    "on-secondary": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base_grid": "4px",
+                    "sidebar_width": "240px",
+                    "padding_lg": "24px",
+                    "max_width": "1280px",
+                    "gutter": "24px",
+                    "padding_md": "16px",
+                    "padding_sm": "8px"
+            },
+            "fontFamily": {
+                    "h2": ["Inter"],
+                    "metadata": ["Inter"],
+                    "h3": ["Inter"],
+                    "body": ["Inter"],
+                    "h1": ["Inter"],
+                    "code": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                    "h2": ["18px", {"lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "metadata": ["12px", {"lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                    "h3": ["15px", {"lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "600"}],
+                    "body": ["14px", {"lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400"}],
+                    "h1": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "code": ["12px", {"lineHeight": "16px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #FAFAF9;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .auth-card {
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            border: 1px solid #E7E5E4;
+        }
+        .strength-bar {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="font-body text-on-surface h-full flex items-center justify-center p-padding_md">
+<!-- Background Decoration -->
+<div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+<div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-primary/5 blur-[120px]"></div>
+<div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-tertiary/5 blur-[120px]"></div>
+</div>
+<!-- Main Registration Container -->
+<main class="relative z-10 w-full max-w-[420px]">
+<div class="auth-card bg-surface-container-lowest rounded-xl p-padding_lg flex flex-col gap-6">
+<!-- Brand & Header -->
+<header class="flex flex-col items-center text-center gap-2">
+<div class="w-12 h-12 bg-on-surface flex items-center justify-center rounded-lg mb-2">
+<span class="material-symbols-outlined text-white text-h1" style="font-variation-settings: 'FILL' 1;">account_tree</span>
+</div>
+<h1 class="font-h1 text-h1 text-[#1C1917]">Create account</h1>
+<p class="font-body text-body text-on-surface-variant">Get started with Project Control Center today.</p>
+</header>
+<!-- Registration Form -->
+<form class="flex flex-col gap-4" id="registerForm" onsubmit="return false;">
+<!-- Full Name -->
+<div class="flex flex-col gap-1.5">
+<label class="font-h3 text-h3 text-on-surface-variant" for="name">Full name</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">person</span>
+<input class="w-full pl-10 pr-3 py-2.5 bg-white border border-outline-variant rounded-lg font-body text-body focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all" id="name" name="name" placeholder="John Doe" required="" type="text">
+</div>
+</div>
+<!-- Email -->
+<div class="flex flex-col gap-1.5">
+<label class="font-h3 text-h3 text-on-surface-variant" for="email">Email address</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">mail</span>
+<input class="w-full pl-10 pr-3 py-2.5 bg-white border border-outline-variant rounded-lg font-body text-body focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all" id="email" name="email" placeholder="name@company.com" required="" type="email">
+</div>
+</div>
+<!-- Password -->
+<div class="flex flex-col gap-1.5">
+<label class="font-h3 text-h3 text-on-surface-variant" for="password">Password</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">lock</span>
+<input class="w-full pl-10 pr-3 py-2.5 bg-white border border-outline-variant rounded-lg font-body text-body focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all" id="password" name="password" placeholder="••••••••" required="" type="password">
+</div>
+<!-- Password Strength Indicator -->
+<div class="mt-1">
+<div class="flex gap-1 h-1.5 w-full">
+<div class="strength-bar flex-1 bg-outline-variant rounded-full" id="bar-1"></div>
+<div class="strength-bar flex-1 bg-outline-variant rounded-full" id="bar-2"></div>
+<div class="strength-bar flex-1 bg-outline-variant rounded-full" id="bar-3"></div>
+</div>
+<p class="font-metadata text-metadata text-on-surface-variant mt-1.5" id="strength-text">Password must be at least 8 characters.</p>
+</div>
+</div>
+<!-- Confirm Password -->
+<div class="flex flex-col gap-1.5">
+<label class="font-h3 text-h3 text-on-surface-variant" for="confirm-password">Confirm password</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">shield_lock</span>
+<input class="w-full pl-10 pr-3 py-2.5 bg-white border border-outline-variant rounded-lg font-body text-body focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all" id="confirm-password" name="confirm-password" placeholder="••••••••" required="" type="password">
+</div>
+</div>
+<!-- Agreement -->
+<div class="flex items-start gap-2 mt-2">
+<input class="mt-1 h-4 w-4 rounded border-outline-variant text-primary focus:ring-primary" id="terms" required="" type="checkbox">
+<label class="font-metadata text-metadata text-on-surface-variant" for="terms">
+                        I agree to the <a class="text-primary hover:underline" href="#">Terms of Service</a> and <a class="text-primary hover:underline" href="#">Privacy Policy</a>.
+                    </label>
+</div>
+<!-- Submit Button -->
+<button class="w-full mt-4 bg-primary text-white font-h3 text-h3 py-3 rounded-lg hover:bg-primary-container transition-colors duration-150 flex items-center justify-center gap-2" type="submit">
+                    Create account
+                    <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+</form>
+<!-- Footer -->
+<footer class="pt-4 border-t border-outline-variant text-center">
+<p class="font-body text-body text-on-surface-variant">
+                    Already registered? 
+                    <a class="text-primary font-h3 hover:underline" href="#">Sign in</a>
+</p>
+</footer>
+</div>
+<!-- System Status Info (Contextual Design Pattern) -->
+<div class="mt-6 p-4 flex items-center gap-4 bg-surface-container-high/50 rounded-lg border border-outline-variant/30 backdrop-blur-sm">
+<div class="flex shrink-0">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+</div>
+<div class="flex flex-col">
+<span class="font-h3 text-metadata text-[#1C1917]">SSO Available</span>
+<span class="font-metadata text-metadata text-on-surface-variant">Organization members can sign in with Okta.</span>
+</div>
+</div>
+</main>
+<script>
+        // Password Strength Logic
+        const passwordInput = document.getElementById('password');
+        const bars = [
+            document.getElementById('bar-1'),
+            document.getElementById('bar-2'),
+            document.getElementById('bar-3')
+        ];
+        const strengthText = document.getElementById('strength-text');
+
+        passwordInput.addEventListener('input', (e) => {
+            const val = e.target.value;
+            let score = 0;
+
+            if (val.length >= 8) score++;
+            if (/[A-Z]/.test(val) && /[0-9]/.test(val)) score++;
+            if (/[^A-Za-z0-9]/.test(val)) score++;
+
+            // Reset bars
+            bars.forEach(bar => bar.classList.remove('bg-error', 'bg-tertiary', 'bg-primary-container', 'bg-outline-variant'));
+            bars.forEach(bar => bar.classList.add('bg-outline-variant'));
+
+            if (val.length === 0) {
+                strengthText.innerText = "Password must be at least 8 characters.";
+                return;
+            }
+
+            if (score === 1 || val.length < 8) {
+                bars[0].classList.replace('bg-outline-variant', 'bg-error');
+                strengthText.innerText = "Weak: Needs more complexity.";
+                strengthText.classList.remove('text-on-surface-variant', 'text-tertiary-container', 'text-primary-container');
+                strengthText.classList.add('text-error');
+            } else if (score === 2) {
+                bars[0].classList.replace('bg-outline-variant', 'bg-tertiary');
+                bars[1].classList.replace('bg-outline-variant', 'bg-tertiary');
+                strengthText.innerText = "Fair: Good, but special characters help.";
+                strengthText.classList.remove('text-on-surface-variant', 'text-error', 'text-primary-container');
+                strengthText.classList.add('text-tertiary-container');
+            } else if (score === 3) {
+                bars[0].classList.replace('bg-outline-variant', 'bg-primary');
+                bars[1].classList.replace('bg-outline-variant', 'bg-primary');
+                bars[2].classList.replace('bg-outline-variant', 'bg-primary');
+                strengthText.innerText = "Strong: That's a secure password.";
+                strengthText.classList.remove('text-on-surface-variant', 'text-error', 'text-tertiary-container');
+                strengthText.classList.add('text-primary-container');
+            }
+        });
+
+        // Form Submit Simulation
+        document.getElementById('registerForm').addEventListener('submit', (e) => {
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalContent = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<span class="material-symbols-outlined animate-spin">progress_activity</span> Creating...';
+            
+            setTimeout(() => {
+                btn.innerHTML = '<span class="material-symbols-outlined">check_circle</span> Welcome!';
+                btn.classList.replace('bg-primary', 'bg-primary-container');
+            }, 1500);
+        });
+    </script>
+</body></html>
