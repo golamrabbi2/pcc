@@ -114,7 +114,7 @@ function WbsNode({ node, projectId, assignableUsers, depth, onSelect }) {
   );
 }
 
-export default function WbsTree({ project, tree, assignableUsers }) {
+export default function WbsTree({ project, tree, assignableUsers, onGenerateHandover }) {
   const [addingRoot, setAddingRoot] = useState(false);
   const [rootName, setRootName] = useState('');
   const [selectedNode, setSelectedNode] = useState(null);
@@ -175,6 +175,7 @@ export default function WbsTree({ project, tree, assignableUsers }) {
         node={selectedNode}
         assignableUsers={assignableUsers}
         projectId={project.id}
+        onGenerateHandover={onGenerateHandover}
       />
     </div>
   );

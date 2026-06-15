@@ -1,5 +1,5 @@
 import AppLayout from '@/Layouts/AppLayout';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -15,6 +15,9 @@ const statusColors = {
 };
 
 export default function Show({ project, tree, assignableUsers }) {
+    function handleGenerateHandover(pkgId) {
+        router.post(route('handover.generate', pkgId));
+    }
     return (
         <AppLayout
             header={
@@ -35,6 +38,9 @@ export default function Show({ project, tree, assignableUsers }) {
                         <Button variant="ghost" size="xs" asChild>
                             <Link href={route('health.show', project.id)}>Health</Link>
                         </Button>
+                        <Button variant="ghost" size="xs" asChild>
+                            <Link href={route('handover.index', project.id)}>Handovers</Link>
+                        </Button>
                     </div>
                 </div>
             }
@@ -47,6 +53,7 @@ export default function Show({ project, tree, assignableUsers }) {
                         project={project}
                         tree={tree}
                         assignableUsers={assignableUsers}
+                        onGenerateHandover={handleGenerateHandover}
                     />
                 </div>
 

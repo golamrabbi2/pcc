@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\HandoverController;
 use App\Http\Controllers\HealthController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\WbsController;
@@ -35,6 +36,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/projects/{project}/health', [HealthController::class, 'show'])->name('health.show');
     Route::post('/projects/{project}/health/refresh', [HealthController::class, 'refresh'])->name('health.refresh');
+
+    Route::get('/projects/{project}/handover', [HandoverController::class, 'index'])->name('handover.index');
+    Route::post('/wbs/{workPackage}/handover', [HandoverController::class, 'generate'])->name('handover.generate');
 });
 
 require __DIR__.'/auth.php';
