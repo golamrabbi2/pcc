@@ -45,6 +45,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/wbs/{workPackage}/handover', [HandoverController::class, 'generate'])->name('handover.generate');
 
     Route::get('/projects/{project}/setup', [ProjectController::class, 'setup'])->name('projects.setup');
+    Route::post('/projects/{project}/members/invite', [ProjectController::class, 'inviteMember'])->name('projects.members.invite');
+    Route::delete('/projects/{project}/members/{member}', [ProjectController::class, 'removeMember'])->name('projects.members.remove');
+    Route::patch('/projects/{project}/members/{member}', [ProjectController::class, 'updateMemberRole'])->name('projects.members.update-role');
 
     Route::get('/git/repos', [GitController::class, 'repos'])->name('git.repos');
     Route::get('/git/branches', [GitController::class, 'branches'])->name('git.branches');

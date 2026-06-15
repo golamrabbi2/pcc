@@ -84,9 +84,51 @@ class ProjectController extends Controller
 
     public function setup(Project $project): Response
     {
+        $project->load(['owner', 'members']);
+
         return Inertia::render('Projects/Setup', [
-            'project' => $project->load('owner'),
+            'project' => $project,
         ]);
+    }
+
+    public function inviteMember(Request $request, Project $project): RedirectResponse
+    {
+        $request->validate([
+            'email' => ['required', 'email', 'exists:users,email'],
+            'role' => ['required', 'in:manager,member,viewer'],
+        ]);
+
+        $user = \App\Models\User::where('email', $request->email)->first();
+
+        if ($project->members()->where('user_id', $user->id)->exists()) {
+            return back()->withErrors(['email' => 'User is already a member.']);
+        }
+
+        $project->members()->attach($user->id, ['role' => $request->role]);
+
+        return back()->with('success', 'Member invited.');
+    }
+
+    public function removeMember(Project $project, \App\Models\User $member): RedirectResponse
+    {
+        if ($member->id === $project->owner_id) {
+            return back()->withErrors(['member' => 'Cannot remove the project owner.']);
+        }
+
+        $project->members()->detach($member->id);
+
+        return back()->with('success', 'Member removed.');
+    }
+
+    public function updateMemberRole(Request $request, Project $project, \App\Models\User $member): RedirectResponse
+    {
+        $request->validate([
+            'role' => ['required', 'in:manager,member,viewer'],
+        ]);
+
+        $project->members()->updateExistingPivot($member->id, ['role' => $request->role]);
+
+        return back()->with('success', 'Role updated.');
     }
 
     public function edit(Project $project): Response

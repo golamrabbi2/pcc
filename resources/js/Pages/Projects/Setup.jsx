@@ -1,12 +1,27 @@
 import { useState, useEffect } from 'react';
 import AppLayout from '@/Layouts/AppLayout';
-import { Head, Link, router } from '@inertiajs/react';
+import { Head, Link, router, useForm } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { cn } from '@/lib/utils';
+
+const roleColors = {
+  owner: 'bg-purple-100 text-purple-800',
+  manager: 'bg-blue-100 text-blue-800',
+  member: 'bg-green-100 text-green-800',
+  viewer: 'bg-gray-100 text-gray-800',
+};
 
 export default function Setup({ project, auth }) {
   const [repos, setRepos] = useState([]);
@@ -14,6 +29,12 @@ export default function Setup({ project, auth }) {
   const [search, setSearch] = useState('');
   const user = auth?.user;
   const hasGitHub = !!user?.github_id;
+  const isOwner = project.owner_id === user?.id;
+
+  const { data, setData, post, delete: destroy, patch, processing, errors } = useForm({
+    email: '',
+    role: 'member',
+  });
 
   useEffect(() => {
     if (hasGitHub) {
@@ -30,7 +51,28 @@ export default function Setup({ project, auth }) {
     router.post(route('projects.connect-repo', project.id), {
       github_repo: repo,
       github_owner: owner,
-    }, {
+    }, { preserveScroll: true });
+  }
+
+  function handleInvite(e) {
+    e.preventDefault();
+    post(route('projects.members.invite', project.id), {
+      preserveScroll: true,
+      onSuccess: () => setData('email', ''),
+    });
+  }
+
+  function handleRemove(memberId) {
+    if (confirm('Remove this member from the project?')) {
+      destroy(route('projects.members.remove', [project.id, memberId]), {
+        preserveScroll: true,
+      });
+    }
+  }
+
+  function handleRoleChange(memberId, role) {
+    patch(route('projects.members.update-role', [project.id, memberId]), {
+      role,
       preserveScroll: true,
     });
   }
@@ -38,6 +80,9 @@ export default function Setup({ project, auth }) {
   const filteredRepos = repos.filter((r) =>
     r.full_name.toLowerCase().includes(search.toLowerCase()),
   );
+
+  const members = project.members ?? [];
+  const allMembers = [{ id: project.owner_id, name: project.owner?.name, email: project.owner?.email, pivot: { role: 'owner' } }, ...members];
 
   return (
     <AppLayout
@@ -60,9 +105,6 @@ export default function Setup({ project, auth }) {
             <Button variant="ghost" size="xs" asChild>
               <Link href={route('handover.index', project.id)}>Handovers</Link>
             </Button>
-            <Button variant="ghost" size="xs" asChild>
-              <Link href={route('projects.edit', project.id)}>Settings</Link>
-            </Button>
           </div>
         </div>
       }
@@ -70,6 +112,92 @@ export default function Setup({ project, auth }) {
       <Head title={`${project.name} Setup`} />
 
       <div className="mx-auto max-w-2xl space-y-6">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-sm">Team Members</CardTitle>
+            <CardDescription>Manage who has access to this project.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              {allMembers.map((m) => (
+                <div key={m.id} className="flex items-center gap-3 rounded-lg border p-3">
+                  <Avatar className="h-8 w-8">
+                    <AvatarFallback className="text-xs">{m.name.charAt(0)}</AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium truncate">{m.name}</p>
+                    <p className="text-xs text-muted-foreground truncate">{m.email}</p>
+                  </div>
+                  {m.pivot.role === 'owner' ? (
+                    <Badge variant="outline" className={cn('text-xs', roleColors.owner)}>Owner</Badge>
+                  ) : isOwner ? (
+                    <div className="flex items-center gap-2">
+                      <Select
+                        value={m.pivot.role}
+                        onValueChange={(val) => handleRoleChange(m.id, val)}
+                      >
+                        <SelectTrigger className="h-7 w-24">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="manager">Manager</SelectItem>
+                          <SelectItem value="member">Member</SelectItem>
+                          <SelectItem value="viewer">Viewer</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <button
+                        onClick={() => handleRemove(m.id)}
+                        className="rounded p-1 text-muted-foreground hover:text-destructive"
+                        title="Remove"
+                      >
+                        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                      </button>
+                    </div>
+                  ) : (
+                    <Badge variant="outline" className={cn('text-xs', roleColors[m.pivot.role])}>
+                      {m.pivot.role}
+                    </Badge>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {isOwner && (
+              <form onSubmit={handleInvite} className="mt-4 flex items-end gap-2">
+                <div className="flex-1 space-y-1">
+                  <Label htmlFor="invite-email" className="text-xs">Invite by email</Label>
+                  <Input
+                    id="invite-email"
+                    value={data.email}
+                    onChange={(e) => setData('email', e.target.value)}
+                    placeholder="user@example.com"
+                    className="h-8"
+                  />
+                  {errors.email && <p className="text-xs text-destructive">{errors.email}</p>}
+                </div>
+                <div className="space-y-1">
+                  <Label className="text-xs">Role</Label>
+                  <Select value={data.role} onValueChange={(val) => setData('role', val)}>
+                    <SelectTrigger className="h-8 w-24">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="manager">Manager</SelectItem>
+                      <SelectItem value="member">Member</SelectItem>
+                      <SelectItem value="viewer">Viewer</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <Button type="submit" size="xs" disabled={processing || !data.email}>
+                  Invite
+                </Button>
+              </form>
+            )}
+          </CardContent>
+        </Card>
+
         <Card>
           <CardHeader>
             <CardTitle className="text-sm">GitHub Connection</CardTitle>
@@ -145,8 +273,8 @@ export default function Setup({ project, auth }) {
               <span className="font-medium">{project.github_owner || '—'}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-muted-foreground">GitHub Account</span>
-              <span className="font-medium">{hasGitHub ? 'Connected' : 'Not connected'}</span>
+              <span className="text-muted-foreground">Members</span>
+              <span className="font-medium">{allMembers.length}</span>
             </div>
           </CardContent>
         </Card>
